@@ -1,0 +1,43 @@
+{
+    "rule_name": "Example Count Rule", 
+    "rule_type": "count",
+    "notification_message": "Example Rule was hit", 
+    "cluster_name":"my-cluster",  
+    "index_name":".gwylio-*",
+    "document_type":"",
+    "enabled": false,
+    "operator": ">", 
+    "threshold": 10,
+    "interval":5,
+    "notification_interval": 60,
+    "notification_overrides": {        
+        "slack": {
+            "uri":"",
+            "channel":"",
+            "sender":"",
+            "emoji":""
+        },
+        "email": {
+            "smtp_server":"",
+            "smtp_port":25,
+            "smtp_auth_user":"",
+            "smtp_auth_password":"",
+            "smtp_from_address":"",
+            "smtp_to_addresses":[""]
+        }
+    },    
+    "query": {
+        "query": {
+            "filtered": {
+                "filter": {
+                    "range": {
+                        "timestamp": {
+                            "from": "now-6h",
+                            "to": "now"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
