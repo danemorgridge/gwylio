@@ -1,5 +1,7 @@
 # Gwylio
 
+![Build Status](https://api.travis-ci.org/emoneyadvisor/gwylio.svg?branch=master)
+
 Gwylio is a monitoring tool for Elasticsearch, similar to the Marvel plugin. It works by querying the Elasticsearch cluster for realtime statistic data and then indexing those results back into Elasticsearch to provide historical record of your clusters performance. You can then setup dashboards in Kibana to visualize the data.
 
 It runs as a separate process, and not a plugin, which gives the extra benefit of being able to act independently of the Elasticsearch cluster. Once alerting is in place, it will be able to send you notifications if the cluster becomes unresponsive. It also means that it doesn't have be installed on every node in the cluster. It also allows you to monitor multuple clusters and send the stat data to a single central cluster.
