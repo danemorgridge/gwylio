@@ -10,9 +10,9 @@ It runs as a separate process, and not a plugin, which gives the extra benefit o
 
 To use Gwylio, you can either download a built binary below, or download the source (see: [Working with the source](#workingwithsource)
 
-[Linux]()  
-[Mac]()  
-[Windows]()
+[Linux](https://github.com/emoneyadvisor/gwylio/releases/download/v1.0/gwylio-linux_1.0.tar.gz)  
+[Mac](https://github.com/emoneyadvisor/gwylio/releases/download/v1.0/gwylio-osx_1.0.tar.gz)  
+[Windows](https://github.com/emoneyadvisor/gwylio/releases/download/v1.0/gwylio-windows_1.0.zip)
 
 Unzip the package to where you will run it and modify the configuration file:
 
