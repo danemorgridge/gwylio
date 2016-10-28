@@ -10,7 +10,7 @@ It runs as a separate process, and not a plugin, which gives the extra benefit o
 
 ## Installation
 
-To use Gwylio, you can either download a built from the [Releases](https://github.com/emoneyadvisor/gwylio/releases) page, or download the source (see: [Working with the source](#workingwithsource))
+To use Gwylio, you can either download a build from the [Releases](https://github.com/emoneyadvisor/gwylio/releases) page, or download the source (see: [Working with the source](#workingwithsource))
 
 
 
