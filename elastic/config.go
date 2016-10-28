@@ -30,6 +30,9 @@ type options struct {
 	DefaultSMTPAuthPassword    string              `yaml:"smtp_auth_password"`
 	DefaultSMTPFromAddress     string              `yaml:"smtp_from_address"`
 	DefaultSMTPToAddresses     []string            `yaml:"smtp_to_addresses"`
+	DefaultHipChatAuthToken    string              `yaml:"hipchat_auth_token"`
+	DefaultHipBaseURL          string              `yaml:"hipchat_base_url"`
+	DefaultHipChatRoom         string              `yaml:"hipchat_room"`
 }
 
 type elasticHostConfig struct {

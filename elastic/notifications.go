@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/jordan-wright/email"
+	"github.com/tbruyelle/hipchat-go/hipchat"
 )
 
 type slackNotification struct {
@@ -61,9 +62,16 @@ type emailNotificationSetting struct {
 	ToAddresses      []string `json:"smtp_to_addresses"`
 }
 
+type hipChatNotificationSetting struct {
+	AuthToken string `json:"auth_token"`
+	BaseURL   string `json:"base_url"`
+	Room      string `json:"room"`
+}
+
 type notificationOverrides struct {
-	Slack slackNotificationSetting `json:"slack"`
-	Email emailNotificationSetting `json:"email"`
+	Slack   slackNotificationSetting   `json:"slack"`
+	Email   emailNotificationSetting   `json:"email"`
+	HipChat hipChatNotificationSetting `json:"hipchat"`
 }
 
 type notificationRule struct {
@@ -348,6 +356,27 @@ func buildEmailSettings(overrideSettings emailNotificationSetting) emailNotifica
 	return emailSettings
 }
 
+func buildHipChatSettings(overrideSettings hipChatNotificationSetting) hipChatNotificationSetting {
+	var hipChatSettings hipChatNotificationSetting
+	hipChatSettings.AuthToken = configuration.DefaultHipChatAuthToken
+	hipChatSettings.BaseURL = configuration.DefaultHipBaseURL
+	hipChatSettings.Room = configuration.DefaultHipChatRoom
+
+	if overrideSettings.AuthToken != "" {
+		hipChatSettings.AuthToken = overrideSettings.AuthToken
+	}
+
+	if overrideSettings.BaseURL != "" {
+		hipChatSettings.BaseURL = overrideSettings.BaseURL
+	}
+
+	if overrideSettings.Room != "" {
+		hipChatSettings.Room = overrideSettings.Room
+	}
+
+	return hipChatSettings
+}
+
 func sendNotification(message string, attachment []byte, overrides notificationOverrides) {
 
 	for _, notifyMethod := range configuration.Notifications {
@@ -355,9 +384,15 @@ func sendNotification(message string, attachment []byte, overrides notificationO
 			slackSettings := buildSlackSettings(overrides.Slack)
 			sendSlackNotification(slackSettings, message)
 		}
+
 		if notifyMethod == "email" {
 			emailSettings := buildEmailSettings(overrides.Email)
 			sendEmailNotification(emailSettings, message, attachment)
+		}
+
+		if notifyMethod == "hipchat" {
+			hipchatSettings := buildHipChatSettings(overrides.HipChat)
+			sendHipChatNotification(hipchatSettings, message)
 		}
 	}
 
@@ -419,4 +454,27 @@ func sendEmailNotification(settings emailNotificationSetting, message string, at
 		log.Print("Error sending email notification: ", err)
 	}
 
+}
+
+func sendHipChatNotification(settings hipChatNotificationSetting, message string) {
+
+	if settings.AuthToken == "" {
+		log.Print("HipChat Auth Token not set")
+		return
+	}
+
+	if settings.Room == "" {
+		log.Print("HipChat Room not set")
+		return
+	}
+
+	c := hipchat.NewClient(settings.AuthToken)
+
+	// only update the base url if it's using something other than the default
+	if settings.BaseURL != "" {
+		c.BaseURL, _ = url.Parse(settings.BaseURL)
+	}
+
+	notifRq := &hipchat.NotificationRequest{Message: message}
+	c.Room.Notification(settings.Room, notifRq)
 }

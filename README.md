@@ -10,11 +10,9 @@ It runs as a separate process, and not a plugin, which gives the extra benefit o
 
 ## Installation
 
-To use Gwylio, you can either download a built binary below, or download the source (see: [Working with the source](#workingwithsource)
+To use Gwylio, you can either download a built from the [Releases](https://github.com/emoneyadvisor/gwylio/releases) page, or download the source (see: [Working with the source](#workingwithsource))
 
-[Linux](https://github.com/emoneyadvisor/gwylio/releases/download/v1.0/gwylio-linux_1.0.tar.gz)  
-[Mac](https://github.com/emoneyadvisor/gwylio/releases/download/v1.0/gwylio-osx_1.0.tar.gz)  
-[Windows](https://github.com/emoneyadvisor/gwylio/releases/download/v1.0/gwylio-windows_1.0.zip)
+
 
 Unzip the package to where you will run it and modify the configuration file:
 
@@ -52,6 +50,10 @@ smtp_auth_user: ""
 smtp_auth_password: ""
 smtp_from_address: ""
 smtp_to_addresses: [""]
+
+hipchat_auth_token: ""
+hipchat_base_url: ""
+hipchat_room: ""
 ```
 
 The `elastic_clients_from` setting is an aray of an array of cluster settings including an array of URIs that point to the HTTP accessable client nodes for your Elasticsearch clusters, the cluster name (as defined in the elasticsearch configuration files), and the number of nodes in the cluster.
@@ -110,6 +112,13 @@ If you are using SMTP Authentication, set the `smtp_auth_user` and `smtp_auth_pa
 
 `smtp_to_addresses` is an array of email addresses that will receive the email notification.
 
+### Hipchat Notifications
+
+`hipchat_auth_token` is the auth token from HipChat.
+
+`hipchat_base_url` is the base url for the HipChat server. If you are not using a custom HipChat server, leave this blank.
+
+`hipchat_room` is the room you want the notification to go to.
 
 ## Alerting
 

@@ -213,3 +213,70 @@ func TestEmailSettingsOverrides(t *testing.T) {
 		}
 	}
 }
+
+func TestHipChatSettingsDefaults(t *testing.T) {
+
+	hipChatAuthToken := "955317d490dd100bef67d8336fd769f9"
+	hipchatBaseUrl := "https://myhipchatserver/v2/"
+	hipChatRoom := "Gwylio"
+
+	configuration.DefaultHipChatAuthToken = hipChatAuthToken
+	configuration.DefaultHipBaseURL = hipchatBaseUrl
+	configuration.DefaultHipChatRoom = hipChatRoom
+
+	var hipChatOverrides hipChatNotificationSetting
+
+	overriddenSettings := buildHipChatSettings(hipChatOverrides)
+
+	if overriddenSettings.AuthToken != hipChatAuthToken {
+		t.Fail()
+		t.Logf("HipChat Auth Token shouldn't be overridden if it was blank")
+	}
+
+	if overriddenSettings.BaseURL != hipchatBaseUrl {
+		t.Fail()
+		t.Logf("HipChat BaseURL shouldn't be overridden if it was blank")
+	}
+
+	if overriddenSettings.Room != hipChatRoom {
+		t.Fail()
+		t.Logf("HipChat Room shouldn't be overridden if it was blank")
+	}
+}
+
+func TestHipChatSettingsOverrides(t *testing.T) {
+
+	hipChatAuthToken := "955317d490dd100bef67d8336fd769f9"
+	hipchatBaseUrl := "https://myhipchatserver/v2/"
+	hipChatRoom := "Gwylio"
+
+	overriddenHipChatAuthToken := "302e8206e44ace279a0c46676ee0e537"
+	overriddenHipchatBaseUrl := "https://myoverriddenhipchatserver/v2/"
+	overriddenHipChatRoom := "Gwylio Override"
+
+	configuration.DefaultHipChatAuthToken = hipChatAuthToken
+	configuration.DefaultHipBaseURL = hipchatBaseUrl
+	configuration.DefaultHipChatRoom = hipChatRoom
+
+	var hipChatOverrides hipChatNotificationSetting
+	hipChatOverrides.AuthToken = overriddenHipChatAuthToken
+	hipChatOverrides.BaseURL = overriddenHipchatBaseUrl
+	hipChatOverrides.Room = overriddenHipChatRoom
+
+	overriddenSettings := buildHipChatSettings(hipChatOverrides)
+
+	if overriddenSettings.AuthToken != overriddenHipChatAuthToken {
+		t.Fail()
+		t.Logf("HipChat Auth Token should be overridden")
+	}
+
+	if overriddenSettings.BaseURL != overriddenHipchatBaseUrl {
+		t.Fail()
+		t.Logf("HipChat BaseURL should be overridden")
+	}
+
+	if overriddenSettings.Room != overriddenHipChatRoom {
+		t.Fail()
+		t.Logf("HipChat Room should be overridden")
+	}
+}
