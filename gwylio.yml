@@ -3,7 +3,7 @@
 elastic_clients_from:
   - hosts: ["http://localhost:9200"]
     cluster_name: "my-cluster"
-    expected_node_count: 4
+    expected_node_count: 1
 # comma separated list of hosts to send data to
 elastic_clients_to: ["http://localhost:9200"]
 
@@ -32,3 +32,8 @@ smtp_auth_user: ""
 smtp_auth_password: ""
 smtp_from_address: ""
 smtp_to_addresses: [""]
+
+hipchat_auth_token: ""
+hipchat_base_url: ""
+hipchat_room: ""
+
